@@ -13,7 +13,13 @@ $client->setRedirectUri($_ENV['GOOGLE_REDIRECT_URI']);
 $client->addScope("email");
 $client->addScope("profile");
 
+
+$state = http_build_query(['workshop_id' => 1]);
+$client->setState($state);
+
+
 $authUrl = $client->createAuthUrl();
+$encodedAuthUrl = urlencode($authUrl);
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +30,13 @@ $authUrl = $client->createAuthUrl();
 <body>
   <h1>Welcome to Workshop Attendance</h1>
   <p>Please sign in with your Google account to mark your attendance.</p>
+
   <a href="<?= htmlspecialchars($authUrl) ?>">Sign in with Google</a>
+
+  <p>Or scan this QR code:</p>
+  <img 
+    src="https://api.qrserver.com/v1/create-qr-code/?data=<?= $encodedAuthUrl ?>&size=300x300" 
+    alt="QR code for Google sign-in"
+  />
 </body>
 </html>
