@@ -3,6 +3,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+
 $db = new PDO("mysql:host=156.67.221.50;dbname=". $_ENV['DB_NAME'] . ";charset=utf8mb4", $_ENV['DB_USER'], $_ENV['DB_PASS']);
 $stmt = $db->query('SELECT * FROM attendance');
 $attendees = $stmt->fetchAll(PDO::FETCH_ASSOC);
