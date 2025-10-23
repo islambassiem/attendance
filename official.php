@@ -1,3 +1,4 @@
+<?php require 'google.php';?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,6 @@
   </style>
 </head>
 <body>
-  <p>You recorded your attendance already.</p>
+  <p>Please try again with your official email address by clicking <a href="<?= htmlspecialchars($authUrl) ?>">here</a>.</p>
 </body>
 </html>
