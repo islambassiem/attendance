@@ -15,7 +15,7 @@ $client->addScope("email");
 $client->addScope("profile");
 
 
-$state = http_build_query(['workshop_id' => 1]);
+$state = http_build_query(['workshop_id' => 3]);
 $client->setState($state);
 
 
