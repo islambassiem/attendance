@@ -31,7 +31,8 @@ $name  = $userInfo->name;
 
 
 if (!str_ends_with($email, '@inaya.edu.sa')) {
-    die('Please use your official email address.');
+    header('Location: official.php');
+    exit;
 }
 
 $state = $_GET['state'] ?? '';
