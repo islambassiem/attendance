@@ -11,8 +11,8 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
-$db = new PDO("mysql:host=156.67.221.50;dbname=". $_ENV['DB_NAME'] . ";charset=utf8mb4", $_ENV['DB_USER'], $_ENV['DB_PASS']);
-$stmt = $db->query('SELECT * FROM attendance');
+$db = require 'connect.php';
+$stmt = $db->query('SELECT * FROM attendance WHERE created_at >= CURDATE() AND created_at < CURDATE() + INTERVAL 1 DAY ORDER BY created_at DESC');
 $attendees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
@@ -25,23 +25,27 @@ $attendees = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Document</title>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Singed at</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($attendees as $attendee): ?>
+    <?php if(count($attendees) > 0) :?>
+        <table>
+            <thead>
                 <tr>
-                    <td><?= $attendee['user_name'] ?></td>
-                    <td><?= $attendee['email'] ?></td>
-                    <td><?= $attendee['created_at'] ?></td>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Singed at</th>
                 </tr>
-            <?php endforeach ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                    <?php foreach ($attendees as $attendee): ?>
+                        <tr>
+                            <td><?= $attendee['user_name'] ?></td>
+                            <td><?= $attendee['email'] ?></td>
+                            <td><?= $attendee['created_at'] ?></td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+        </table>
+    <?php else :?>
+        <p>No Attendees Yet</p>
+    <?php endif ?>
 </body>
 </html>

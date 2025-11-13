@@ -7,17 +7,20 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$client = new Google\Client();
-$client->setClientId($_ENV['GOOGLE_CLIENT_ID']);
-$client->setClientSecret($_ENV['GOOGLE_CLIENT_SECRET']);
-$client->setRedirectUri($_ENV['GOOGLE_REDIRECT_URI']);
-$client->addScope("email");
-$client->addScope("profile");
+function geturl($sessionID)
+{
+    $client = new Google\Client();
+    $client->setClientId($_ENV['GOOGLE_CLIENT_ID']);
+    $client->setClientSecret($_ENV['GOOGLE_CLIENT_SECRET']);
+    $client->setRedirectUri($_ENV['GOOGLE_REDIRECT_URI']);
+    $client->addScope("email");
+    $client->addScope("profile");
 
 
-$state = http_build_query(['workshop_id' => 3]);
-$client->setState($state);
+    $state = http_build_query(['workshop_id' => $sessionID]);
+    $client->setState($state);
 
 
-$authUrl = $client->createAuthUrl();
-$encodedAuthUrl = urlencode($authUrl);
+    $authUrl = $client->createAuthUrl();
+    return urlencode($authUrl);
+}

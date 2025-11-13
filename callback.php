@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/connect.php';
 
 use Dotenv\Dotenv;
 
@@ -36,7 +37,6 @@ $state = $_GET['state'] ?? '';
 parse_str($state, $params);
 $workshopId = $params['workshop_id'] ?? null;
 
-$db = new PDO("mysql:host=156.67.221.50;dbname=". $_ENV['DB_NAME'] . ";charset=utf8mb4", $_ENV['DB_USER'], $_ENV['DB_PASS']);
 $count = $db->prepare("SELECT count(*) AS count FROM attendance WHERE email = ? AND workshop_id = ?;");
 $count->execute([$email, $workshopId]);
 $x = $count->fetch();

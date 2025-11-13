@@ -1,5 +1,10 @@
 <?php
 require 'google.php';
+require 'connect.php';
+
+$stmt = $db->prepare("SELECT * FROM workshops WHERE date >= CURDATE() AND date < CURDATE() + INTERVAL 1 DAY");
+$stmt->execute();
+$workshop = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -22,9 +27,15 @@ require 'google.php';
   </style>
 </head>
 <body>
-  <img 
-    src="https://api.qrserver.com/v1/create-qr-code/?data=<?= $encodedAuthUrl ?>&size=300x300" 
+  <?php if (!$workshop) :?>
+    <p>No workshops found today</p>
+  <?php else :?>
+    <h1><?= $workshop['name'] ?></h1>
+    <img 
+    src="https://api.qrserver.com/v1/create-qr-code/?data=<?= getUrl($workshop['id']) ?>&size=500x500" 
     alt="QR code for Google sign-in"
-  />
+    />
+  <?php endif; ?>
+
 </body>
 </html>
