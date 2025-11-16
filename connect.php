@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $db = new PDO("mysql:host=156.67.221.50;dbname=". $_ENV['DB_NAME'] . ";charset=utf8mb4", $_ENV['DB_USER'], $_ENV['DB_PASS']);
 
 return $db;
