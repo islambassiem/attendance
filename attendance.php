@@ -28,14 +28,13 @@ $name = $_GET['name'] ?? 'Guest';
       font-size: 40px;
     }
     a{
-      font-size: 40px;
+      font-size: 60px;
     }
   </style>
 </head>
 <body>
   <h2>Thank you, <?= htmlspecialchars($name) ?>!</h2>
-  <p>Your attendance has been successfully recorded.</p>
   <p>After the session, kindly fill the evaluation form.</p>
-  <a href="https://forms.gle/HYaB6Lq5RKAvKcUR7">Evaluation Form</a>
+  <a href="https://forms.gle/wB4ZKUroNX7eFQWAA">Evaluation Form</a>
 </body>
 </html>
